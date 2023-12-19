@@ -1,7 +1,11 @@
 <!-- Login.vue -->
 <template>
   <div class="auth-container">
-    <form v-if="!comeFrom" class="auth-form" @submit.prevent="registrarUser">
+    <form
+      v-if="!showSuccessRegister && !charging"
+      class="auth-form"
+      @submit.prevent="registrarUser"
+    >
       <div class="seccion-top">
         <i class="fa-solid fa-user"></i>
         <h2 class="mb-8">Crear cuenta</h2>
@@ -63,36 +67,53 @@
       </div>
 
       <!-- ENLACES OPCIONES -->
-      <div class="seccion-inferior-enlaces">
-        <!-- OPCIÓN INICIAR SESIÓN -->
-        <p>
-          <span @click="goToLogin">Ya tengo una cuenta, iniciar sesión</span>
-        </p>
+      <div class="seccion-inferior-enlaces mt-10 mb-5">
+        <span @click="goToLogin">Ya tengo una cuenta, iniciar sesión</span>
       </div>
 
       <!-- BOTÓN -->
-      <button type="submit">Registrarse</button>
+      <button class="button" type="submit">Registrarse</button>
+      <span class="error">{{ errors.emailDuplicated }}</span>
     </form>
-    <success-view v-if="comeFrom" :comeFrom="comeFrom"></success-view>
+
+    <div v-if="showSuccessRegister && !charging" class="success-view">
+      <div class="c-registered">
+        <div>
+          <h2 class="title mb-5">¡Ha sido registrado correctamente!</h2>
+          <p>Confirma tu registro en el correo electrónico</p>
+        </div>
+
+        <div class="enlaces">
+          <button class="button" @click="goToGmail">
+            Abrir correo electrónico
+            <i class="fa-solid fa-envelope"></i>
+          </button>
+          o
+          <button class="button" @click="goToHome">
+            Ir a la página principal <i class="fa-solid fa-reply"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <LoadingAnimation v-if="charging"></LoadingAnimation>
   </div>
 </template>
 
 <script>
 import "./autentication.scss";
-import imgLogo from "../../assets/images/logo.png";
-import SuccessView from "./success/SuccessView.vue";
+import LoadingAnimation from "../../components/loading-animation/loading-animation.vue";
+import "../../main.scss";
 
 export default {
-  components: { SuccessView },
   name: "RegisterView",
-  comments: {
-    imgLogo,
-    SuccessView,
+  components: {
+    LoadingAnimation,
   },
   data() {
     return {
       userName: "Jordiet",
-      userEmail: "asdfasfaflfalefefs2@gmail.com",
+      userEmail: "jordimolto1@gmail.com",
       passwd_1: "123456aA",
       passwd_2: "123456aA",
       errors: {
@@ -100,9 +121,10 @@ export default {
         userEmail: "",
         passwd_1: "",
         passwd_2: "",
+        emailDuplicated: "",
       },
-      comeFrom: null,
       charging: false,
+      showSuccessRegister: false,
     };
   },
   methods: {
@@ -116,24 +138,76 @@ export default {
       ) {
         this.charging = true;
 
-        const { user, error } = await this.$root.$data.$supabase.auth.signUp({
-          email: this.userEmail,
-          password: this.passwd_1,
-        });
+        try {
+          // Verificar si ya existe un usuario con el mismo correo electrónico
+          const { userExists, err } = await this.$root.$data.$supabase
+            .from("Clientes")
+            .select("email")
+            .eq("email", this.userEmail);
 
-        this.charging = false;
-        if (error) {
+          if (userExists) {
+            this.emailDuplicated = this.userEmail + " ya está registrado.";
+            throw new Error(this.userEmail + " ya está registrado.");
+          } else if (err) {
+            throw err;
+          }
+
+          // Si no existe, proceder con el registro
+          const response = await this.$root.$data.$supabase.auth.signUp({
+            email: this.userEmail,
+            password: this.passwd_1,
+          });
+
+          if (response.error) {
+            throw response.error;
+          } else {
+            console.log(
+              "Usuario registrado exitosamente:",
+              response.data.user.identities[0].user_id
+            );
+            // Insertamos la info del usuario creado en la tabla Clientes
+            const responseUserCreated = await this.$root.$data.$supabase
+              .from("Clientes")
+              .insert([
+                {
+                  user_id: response.data.user.identities[0].user_id,
+                  email: this.userEmail,
+                  nombre: this.userName,
+                },
+              ]);
+
+            if (responseUserCreated.error) {
+              throw responseUserCreated.error;
+            } else {
+              this.showSuccessRegister = true;
+              console.log(
+                "Usuario registrado exitosamente (data):",
+                responseUserCreated.data
+              );
+            }
+          }
+        } catch (error) {
           console.error("Error al registrar usuario:", error.message);
-        } else {
-          this.comeFrom = "register";
-          console.log("Usuario registrado exitosamente:", user);
+          this.errors.userEmail = error.message;
+        } finally {
+          this.charging = false;
         }
       }
+    },
+
+    // Navegar a la home
+    goToHome() {
+      this.$router.push({ name: "home" });
     },
 
     // Navegar a la ruta de login
     goToLogin() {
       this.$router.push({ name: "login" });
+    },
+
+    // Navegar a Gmail
+    goToGmail() {
+      window.open("https://mail.google.com/", "_blank");
     },
 
     // UTILS

@@ -26,11 +26,6 @@ const routes = [
     component: () => import("../views/autenticacion/PasswordChange.vue"),
   },
   {
-    path: "/success",
-    name: "success",
-    component: () => import("../views/autenticacion/success/SuccessView.vue"),
-  },
-  {
     path: "/dashboard-view",
     name: "dashboard-view",
     component: () => import("../views/dashboard/DashboardView.vue"),
@@ -39,6 +34,7 @@ const routes = [
 
 const router = new VueRouter({
   routes,
+  mode: "history",
 });
 
 export default router;

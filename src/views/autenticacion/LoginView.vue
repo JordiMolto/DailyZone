@@ -21,7 +21,7 @@
       </div>
 
       <!-- ENLACES OPCIONES -->
-      <div class="seccion-inferior-enlaces">
+      <div class="seccion-inferior-enlaces mt-10 mb-5">
         <p>
           <span @click="enviarCorreoCambioContrasenya()"
             >¿Has olvidado tu contraseña?</span
@@ -32,7 +32,7 @@
       </div>
 
       <!-- BOTÓN -->
-      <button type="submit">Iniciar sesión</button>
+      <button class="button" type="submit">Iniciar sesión</button>
     </form>
   </div>
 </template>

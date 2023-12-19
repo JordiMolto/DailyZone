@@ -37,7 +37,7 @@
       </div>
 
       <!-- ENLACES OPCIONES -->
-      <div class="seccion-inferior-enlaces">
+      <div class="seccion-inferior-enlaces mt-10 mb-5">
         <!-- OPCIÓN CONTRASEÑAS -->
         <p>
           <span>Iniciar sesión</span>
@@ -47,7 +47,7 @@
       </div>
 
       <!-- BOTÓN -->
-      <button type="submit">Confirmar</button>
+      <button class="button" type="submit">Confirmar</button>
     </form>
   </div>
 </template>

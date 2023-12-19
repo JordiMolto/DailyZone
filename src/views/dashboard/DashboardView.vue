@@ -8,7 +8,7 @@
     <br />
     <br />
     <h3>tienes la posibilidad de:</h3>
-    <button class="mt-25" @click="cerrarSesion">Cerrar sesión</button>
+    <button class="button mt-25" @click="cerrarSesion">Cerrar sesión</button>
   </div>
 </template>
 
