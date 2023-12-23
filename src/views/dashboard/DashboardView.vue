@@ -14,6 +14,7 @@
 
 <script>
 import "./dashboard-view.scss";
+import { supabaseClient } from "@/main";
 
 export default {
   name: "DashboardView",
@@ -24,9 +25,13 @@ export default {
   methods: {
     // CERRAR SESIÓN
     async cerrarSesion() {
-      alert("entramos al cerrar sesion");
-      await this.$supabase.auth.signOut();
-      console.log("Usuario desconectado");
+      let response = await supabaseClient.auth.signOut();
+
+      if (response.error) {
+        console.error("Error al cerrar la sesión:", response.error);
+      } else {
+        this.$router.push({ name: "home" });
+      }
     },
   },
 };

@@ -54,13 +54,10 @@
 
 <script>
 import "./autentication.scss";
-import imgLogo from "../../assets/images/logo.png";
 
 export default {
   name: "PasswordChange",
-  comments: {
-    imgLogo,
-  },
+
   data() {
     return {};
   },

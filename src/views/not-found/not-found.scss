@@ -1,0 +1,21 @@
+.not-found-view {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 80px;
+    height: 100vh;
+    justify-content: center;
+    background: linear-gradient(90deg, #1b0b2e, #371b58, #1b0b2e);
+
+    img.img-404 {
+        width: 30%;
+    }
+
+    .titulo-not-found {
+        font-size: 40px;
+        color: rgb(216, 174, 255);
+        font-weight: bold;
+        width: 60%;
+    }
+}

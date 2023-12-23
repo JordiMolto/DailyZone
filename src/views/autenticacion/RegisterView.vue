@@ -102,8 +102,8 @@
 
 <script>
 import "./autentication.scss";
-import LoadingAnimation from "../../components/loading-animation/loading-animation.vue";
-import "../../main.scss";
+import LoadingAnimation from "@components/loading-animation/loading-animation.vue";
+import { supabaseClient } from "@/main";
 
 export default {
   name: "RegisterView",
@@ -153,7 +153,7 @@ export default {
           }
 
           // Si no existe, proceder con el registro
-          const response = await this.$root.$data.$supabase.auth.signUp({
+          const response = await supabaseClient.auth.signUp({
             email: this.userEmail,
             password: this.passwd_1,
           });
@@ -161,10 +161,6 @@ export default {
           if (response.error) {
             throw response.error;
           } else {
-            console.log(
-              "Usuario registrado exitosamente:",
-              response.data.user.identities[0].user_id
-            );
             // Insertamos la info del usuario creado en la tabla Clientes
             const responseUserCreated = await this.$root.$data.$supabase
               .from("Clientes")
@@ -180,10 +176,6 @@ export default {
               throw responseUserCreated.error;
             } else {
               this.showSuccessRegister = true;
-              console.log(
-                "Usuario registrado exitosamente (data):",
-                responseUserCreated.data
-              );
             }
           }
         } catch (error) {

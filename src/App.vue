@@ -7,13 +7,11 @@
 </template>
 
 <script>
-import "./assets/styles/main.scss";
-import "./assets/styles/paleta-colores.scss";
+import "@scss/main.scss";
+import "@scss/paleta-colores.scss";
 
 export default {
   name: "App",
-  components: {
-
-  },
+  components: {},
 };
 </script>

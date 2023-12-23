@@ -4,15 +4,12 @@
   justify-content: center;
   height: 100vh;
   width: 100%;
-  display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: rgb(31, 0, 60);
   background: linear-gradient(90deg, #1b0b2e, #371b58, #1b0b2e);
 
   @media screen and (max-width: 720px) {
     padding: 0 10%;
-    background: rgb(31, 0, 60);
     background: linear-gradient(90deg, #1b0b2e, #371b58);
   }
 
@@ -110,3 +107,5 @@
 
   /**************** LOGIN ****************/
 }
+
+

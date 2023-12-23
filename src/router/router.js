@@ -1,6 +1,7 @@
 // router.js
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { supabaseClient } from "@/main";
 
 Vue.use(VueRouter);
 
@@ -26,9 +27,34 @@ const routes = [
     component: () => import("../views/autenticacion/PasswordChange.vue"),
   },
   {
+    path: "*",
+    name: "error-404",
+    component: () => import("../views/not-found/NotFound.vue"),
+  },
+  {
     path: "/dashboard-view",
     name: "dashboard-view",
     component: () => import("../views/dashboard/DashboardView.vue"),
+    beforeEnter: (to, from, next) => {
+      (async () => {
+        try {
+          const {
+            data: { session },
+          } = await supabaseClient.auth.getSession();
+
+          const user = session?.user;
+
+          if (!user) {
+            next("/login"); // Redirigir si no está autenticado
+          } else {
+            next(); // Permitir el acceso
+          }
+        } catch (error) {
+          console.error(error);
+          next("/error");
+        }
+      })();
+    },
   },
 ];
 
