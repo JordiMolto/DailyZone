@@ -2,9 +2,9 @@
   <div class="ejemplo-home-section">
     <h1>BIENVENIDO!!</h1>
     <div class="ejemplo-2">
-      <button class="button" @click="goToLogin">Ir a Login</button>
-      <button class="button" @click="goToRegister">Ir a Register</button>
-      <button class="button" @click="goToPasswordChange">Ir a Password Change</button>
+      <button class="button w-100" @click="goToLogin">Ir a Login</button>
+      <button class="button w-100" @click="goToRegister">Ir a Register</button>
+      <button class="button w-100" @click="goToPasswordChange">Ir a Password Change</button>
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 // router.js
 import Vue from "vue";
 import VueRouter from "vue-router";
-import { supabaseClient } from "@/main";
+import { supabaseClient } from "../main";
 
 Vue.use(VueRouter);
 
@@ -25,6 +25,11 @@ const routes = [
     path: "/password-change",
     name: "password-change",
     component: () => import("../views/autenticacion/PasswordChange.vue"),
+  },
+  {
+    path: "/login-magic-link",
+    name: "login-magic-link",
+    component: () => import("../views/autenticacion/LoginMagicLink.vue"),
   },
   {
     path: "*",

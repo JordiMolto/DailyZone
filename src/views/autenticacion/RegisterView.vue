@@ -47,9 +47,17 @@
             type="password"
             id="passwd_1"
             name="passwd_1"
-            @blur="checkPassword(passwd_1)"
+            @blur="
+              checkPasswordMatch(passwd_1, passwd_2);
+              validatePassword(passwd_1, 'passwd_1');
+            "
           />
           <span class="error">{{ errors.passwd_1 }}</span>
+          <br />
+          <span class="error" v-if="showPasswordValidationpasswd_1">
+            La contraseña debe contener al menos:
+            <br />{{ passwordValidationMessagepasswd_1 }}
+          </span>
         </div>
 
         <div class="form-field">
@@ -60,9 +68,17 @@
             type="password"
             id="passwd_2"
             name="passwd_2"
-            @blur="checkPasswordMatch(passwd_1, passwd_2)"
+            @blur="
+              checkPasswordMatch(passwd_1, passwd_2);
+              validatePassword(passwd_2, 'passwd_2');
+            "
           />
           <span class="error">{{ errors.passwd_2 }}</span>
+          <br />
+          <span class="error" v-if="showPasswordValidationpasswd_2">
+            La contraseña debe contener al menos:
+            <br />{{ passwordValidationMessagepasswd_2 }}
+          </span>
         </div>
       </div>
 
@@ -72,8 +88,10 @@
       </div>
 
       <!-- BOTÓN -->
-      <button class="button" type="submit">Registrarse</button>
-      <span class="error">{{ errors.emailDuplicated }}</span>
+      <button class="button w-100" type="submit">Registrarse</button>
+      <span v-if="errors.emailDuplicated" class="error-message mt-10">{{
+        errors.emailDuplicated
+      }}</span>
     </form>
 
     <div v-if="showSuccessRegister && !charging" class="success-view">
@@ -84,12 +102,12 @@
         </div>
 
         <div class="enlaces">
-          <button class="button" @click="goToGmail">
+          <button class="button w-100" @click="goToGmail">
             Abrir correo electrónico
             <i class="fa-solid fa-envelope"></i>
           </button>
           o
-          <button class="button" @click="goToHome">
+          <button class="button w-100" @click="goToHome">
             Ir a la página principal <i class="fa-solid fa-reply"></i>
           </button>
         </div>
@@ -102,8 +120,8 @@
 
 <script>
 import "./autentication.scss";
-import LoadingAnimation from "@components/loading-animation/loading-animation.vue";
-import { supabaseClient } from "@/main";
+import LoadingAnimation from "../../components/loading-animation/loading-animation.vue";
+import { supabaseClient } from "../../main";
 
 export default {
   name: "RegisterView",
@@ -114,8 +132,12 @@ export default {
     return {
       userName: "Jordiet",
       userEmail: "jordimolto1@gmail.com",
-      passwd_1: "123456aA",
-      passwd_2: "123456aA",
+      passwd_1: "aaa",
+      passwd_2: "aaa",
+      showPasswordValidationpasswd_1: false,
+      passwordValidationMessagepasswd_1: "",
+      showPasswordValidationpasswd_2: false,
+      passwordValidationMessagepasswd_2: "",
       errors: {
         userName: "",
         userEmail: "",
@@ -131,8 +153,9 @@ export default {
     // CREAR CUENTA
     async registrarUser() {
       if (
-        this.errors.userName.length <= 0 &&
         this.errors.userEmail.length <= 0 &&
+        this.errors.userName.length <= 0 &&
+        this.errors.emailDuplicated.length <= 0 &&
         this.errors.passwd_1.length <= 0 &&
         this.errors.passwd_2.length <= 0
       ) {
@@ -180,7 +203,7 @@ export default {
           }
         } catch (error) {
           console.error("Error al registrar usuario:", error.message);
-          this.errors.userEmail = error.message;
+          this.errors.emailDuplicated = error.message;
         } finally {
           this.charging = false;
         }
@@ -214,17 +237,51 @@ export default {
         this.errors.userEmail = "";
       }
     },
-    checkPassword(password) {
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-      return regex.test(password)
-        ? (this.errors.passwd_1 = "")
-        : (this.errors.passwd_1 = "La contraseña no cumple con los requisitos");
-    },
     checkPasswordMatch(p1, p2) {
-      return p1 === p2
-        ? (this.errors.passwd_2 = "")
-        : (this.errors.passwd_2 = "La contraseña no coincide con la anterior");
+      if (p1 && p2) {
+        return p1 === p2
+          ? (this.errors.passwd_2 = "")
+          : (this.errors.passwd_2 =
+              "La contraseña no coincide con la anterior");
+      }
+    },
+
+    validatePassword(password, field) {
+      const hasLowerCase = /[a-z]/.test(password);
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasNumbers = /\d/.test(password);
+      const isLengthValid = password.length >= 6;
+
+      let errorMessage = "";
+
+      if (!hasLowerCase) {
+        errorMessage += "Una letra minúscula. ";
+      }
+
+      if (!hasUpperCase) {
+        errorMessage += "Una letra mayúscula. ";
+      }
+
+      if (!hasNumbers) {
+        errorMessage += "Un número. ";
+      }
+
+      if (!isLengthValid) {
+        errorMessage += "6 caracteres. ";
+      }
+
+      this["passwordValidationMessage" + field] = errorMessage.trim();
+      this["showPasswordValidation" + field] = true;
     },
   },
 };
 </script>
+
+<style scoped>
+.error-message {
+  color: rgb(207, 0, 0);
+  font-size: 12px;
+  margin: 10px 0;
+  display: block;
+}
+</style>

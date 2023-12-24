@@ -1,4 +1,3 @@
-<!-- Login.vue -->
 <template>
   <div class="auth-container">
     <form @submit.prevent="loginUser(userEmail, password)" class="auth-form">
@@ -28,44 +27,48 @@
             type="password"
             id="password"
             name="password"
-            @change="checkPassword(password)"
+            @change="validatePassword(password)"
           />
-          <span class="error">{{ errors.password }}</span>
+          <span class="error" v-if="errors.password.length > 0"
+            >La contraseña debe contener al menos: <br />{{
+              errors.password
+            }}</span
+          >
         </div>
       </div>
+      <span class="error-message">{{ errors.err }}</span>
       <span class="error-message">{{ errors.emailDoesntExist }}</span>
 
       <!-- ENLACES OPCIONES -->
       <div class="seccion-inferior-enlaces mt-10 mb-5">
         <p>
-          <span @click="sendPasswordChange()"
-            >¿Has olvidado tu contraseña?</span
-          >
+          <span @click="goToLoginML">¿Has olvidado tu contraseña?</span>
           o
           <span @click="goToRegister">Crear cuenta</span>
         </p>
       </div>
 
       <!-- BOTÓN -->
-      <button class="button" type="submit">Iniciar sesión</button>
+      <button class="button w-100" type="submit">Iniciar sesión</button>
     </form>
   </div>
 </template>
 
 <script>
 import "./autentication.scss";
-import { supabaseClient } from "@/main";
+import { supabaseClient } from "../../main";
 
 export default {
   name: "LoginView",
   data() {
     return {
-      userEmail: "jordimol4to15@gmail.com",
-      password: "123456aA",
+      userEmail: "jordimolto15@gmail.com",
+      password: "aaaaA1",
       errors: {
         userEmail: "",
         password: "",
         emailDoesntExist: "",
+        err: "",
       },
     };
   },
@@ -93,6 +96,7 @@ export default {
       });
       if (error) {
         console.error("Error al iniciar sesión:", error.message);
+        this.errors.err = error.message;
       } else {
         console.log("Inicio de sesión exitoso:", data);
         this.$router.push({ name: "dashboard-view" });
@@ -102,6 +106,10 @@ export default {
     // Navegar a la ruta de registro
     goToRegister() {
       this.$router.push({ name: "register" });
+    },
+    // Navegar a la ruta de MagicLink
+    goToLoginML() {
+      this.$router.push({ name: "login-magic-link" });
     },
 
     // UTILS
@@ -116,18 +124,37 @@ export default {
         this.errors.userEmail = "";
       }
     },
-    checkPassword(password) {
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-      return regex.test(password)
-        ? (this.errors.password = "")
-        : (this.errors.password =
-            "La contraseña no cumple con los requisitos");
+    validatePassword(password) {
+      const hasLowerCase = /[a-z]/.test(password);
+      const hasUpperCase = /[A-Z]/.test(password);
+      const hasNumbers = /\d/.test(password);
+      const isLengthValid = password.length >= 6;
+
+      let errorMessage = "";
+
+      if (!hasLowerCase) {
+        errorMessage += "Una letra minúscula. ";
+      }
+
+      if (!hasUpperCase) {
+        errorMessage += "Una letra mayúscula. ";
+      }
+
+      if (!hasNumbers) {
+        errorMessage += "Un número. ";
+      }
+
+      if (!isLengthValid) {
+        errorMessage += "6 caracteres. ";
+      }
+
+      this.errors.password = errorMessage.trim();
     },
   },
 };
 </script>
 
-<style scoped>
+<style>
 .error-message {
   color: rgb(207, 0, 0);
   font-size: 12px;

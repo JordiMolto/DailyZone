@@ -10,7 +10,7 @@ body {
   background-color: var(--color-fondo);
   color: var(--color-texto);
   margin: 0;
-  height: 100vh;
+  font-size: 15px;
 }
 
 h1,
@@ -32,6 +32,24 @@ a {
 
 .d-none {
   display: none;
+}
+
+
+// WIDTH
+.w-100 {
+  width: 100%;
+}
+
+.w-75 {
+  width: 75%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-25 {
+  width: 25%;
 }
 
 // MARGIN TOP
@@ -171,7 +189,6 @@ a {
 button.button,
 a.button {
   font-size: 14px;
-  width: 100%;
   padding: 10px;
   background-color: #4c3575;
   color: white;

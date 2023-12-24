@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import "@scss/main.scss";
-import "@scss/paleta-colores.scss";
+import "./assets/styles/main.scss";
+import "./assets/styles/paleta-colores.scss";
 
 export default {
   name: "App",

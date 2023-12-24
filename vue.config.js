@@ -9,7 +9,7 @@ module.exports = defineConfig({
         "@views": "@/views",
         "@images": "@/assets/images",
         "@scss": "@/assets/styles",
-        "@": "@/",
+        "@": path.resolve(__dirname, "src"),
       },
     },
   },
