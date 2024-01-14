@@ -279,7 +279,7 @@ export default {
 
 <style scoped>
 .error-message {
-  color: rgb(207, 0, 0);
+  color: var(--color-error);
   font-size: 12px;
   margin: 10px 0;
   display: block;

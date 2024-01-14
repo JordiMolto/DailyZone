@@ -82,7 +82,6 @@ export default {
         .eq("email", em);
 
       if (userExists.data.length <= 0) {
-        console.log("entro aquí:", userExists.data.length);
         this.errors.emailDoesntExist =
           "El usuario con el correo electrónico '" +
           em +
@@ -99,7 +98,7 @@ export default {
         this.errors.err = error.message;
       } else {
         console.log("Inicio de sesión exitoso:", data);
-        this.$router.push({ name: "dashboard-view" });
+        this.$router.push({ name: "dashboard" });
       }
     },
 
@@ -156,7 +155,7 @@ export default {
 
 <style>
 .error-message {
-  color: rgb(207, 0, 0);
+  color: var(--color-error);
   font-size: 12px;
   margin: 10px 0;
   display: block;

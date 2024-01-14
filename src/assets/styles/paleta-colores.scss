@@ -1,26 +1,36 @@
 :root {
   /* PRIMARIO */
-  --color-primario: rgba(55, 27, 88); //var(--color-primario)
-  --color-primario-50: rgba(55, 27, 88, 0.5); //var(--color-primario-50)
-  --color-primario-20: rgba(55, 27, 88, 0.2); //var(--color-primario-20)
-  --color-primario-oscuro: rgb(36, 16, 58); //var(--color-primario-oscuro)
+  --color-primario: #002a4e; //var(--color-primario)
+  --color-primario-oscuro: #001a31; //var(--color-primario-oscuro)
 
   /* SECUNDARIO */
-  --color-secundario: rgba(255, 91, 34); //var(--color-secundario)
-  --color-secundario-50: rgba(255, 91, 34, 0.5); //var(--color-secundario-50)
-  --color-secundario-20: rgba(255, 91, 34, 0.2); //var(--color-secundario-20)
-  --color-secundario-oscuro: rgb(168, 58, 22); //var(--color-oscuro)
+  --color-secundario: #298fdd; //var(--color-secundario)
+  --color-secundario-oscuro: #1b71b3; //var(--color-secundario-oscuro)
 
   /* TERCIARIO */
-  --color-terciario: rgba(255, 145, 48); //var(--color-terciario)
-  --color-terciario-50: rgba(255, 145, 48, 0.5); //var(--color-terciario-50)
-  --color-terciario-20: rgba(255, 145, 48, 0.2); //var(--color-primario-oscuro)
+  --color-terciario: #9ed5f7; //var(--color-terciario)
+
+  /* DIFERENCIAL */
+  --color-diferencial: #f8cd51; //var(--color-diferencial)
+  --color-diferencial-oscuro: #af9135; //var(--color-diferencial-oscuro)
 
   /* ACCIONES */
-  --color-acciones: #4c3575; //var(--color-acciones)
+  --color-acciones-1: #028484; //var(--color-acciones-1)
+  --color-acciones-1-claro: #00aaaa; //var(--color-acciones-1-claro)
+  --color-acciones-1-oscuro: #016464; //var(--color-acciones-1-oscuro)
+  --color-acciones-2: #1973b8; //var(--color-acciones-2)
+  --color-acciones-2-claro: #2a93e4; //var(--color-acciones-2-claro)
+  --color-acciones-2-oscuro: #165e96; //var(--color-acciones-2-oscuro)
 
   /* FONDO */
   --color-fondo: #fcfcfc; //var(--color-fondo)
+
+  /* ESTADOS */
+  --color-error: #cf0000; //var(--color-error)
+  --color-success: #48c500; //var(--color-success)
+  --color-alerta: #f8cd51; //var(--color-alerta)
+  --color-blanco: #fff; //var(--color-blanco)
+  --color-negro: #000; //var(--color-negro)
 
   /* TEXTO */
   --color-texto: #202020; //var(--color-texto)

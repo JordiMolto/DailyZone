@@ -1,0 +1,167 @@
+.sidebar-component {
+  .sidebar {
+    background: var(--color-primario-oscuro);
+    width: 281px;
+    height: 100vh;
+    flex-direction: column;
+    padding: 20px 0;
+    transition: all 0.5s ease;
+
+    .profile {
+      margin: 30px 0 50px 0;
+      text-align: center;
+
+      img {
+        display: block;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        margin: 0 auto;
+        object-fit: cover;
+      }
+
+      h3 {
+        color: var(--color-fondo);
+        margin: 10px 0 5px;
+      }
+
+      p {
+        color: var(--color-gris-claro);
+      }
+    }
+
+    .list-links {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      justify-content: space-between;
+      height: 100%;
+
+      .sidebar-title {
+        color: var(--color-gris-claro);
+        margin-left: 20px;
+      }
+
+      ul.ul-principal {
+        padding: 0;
+
+        li.li-principal,
+        li.li-secundario {
+          list-style: none;
+          text-decoration: none;
+          padding: 10px 20px;
+          cursor: pointer;
+          color: var(--color-gris-claro);
+
+          &:hover a,
+          &:hover .icon,
+          &:hover .item,
+          &:hover .display-icon i {
+            color: var(--color-fondo);
+          }
+          &.active a,
+          &.active .icon,
+          &.active .item,
+          &.active .display-icon i {
+            color: var(--color-acciones-1-claro);
+          }
+          &.active:hover a,
+          &.active:hover .icon,
+          &.active:hover .item,
+          &.active:hover .display-icon i {
+            color: var(--color-acciones-1);
+          }
+
+          .display-icon {
+            i {
+              width: 20px;
+              height: 20px;
+              font-size: 10px;
+              color: var(--color-gris-claro);
+            }
+          }
+
+          a {
+            display: flex;
+            justify-content: space-between;
+            color: var(--color-gris-claro);
+            text-decoration: none;
+            transition: 0.2s;
+            width: 100%;
+
+            &.active {
+              color: var(--color-secundario);
+
+              .icon {
+                color: var(--color-secundario);
+              }
+
+              &:before {
+                display: block;
+              }
+            }
+
+            .icon {
+              color: var(--color-gris-claro);
+              width: 30px;
+              display: inline-block;
+            }
+          }
+        }
+      }
+    }
+
+    .toggle-sidebar {
+      transition: all 0.5s ease;
+      position: absolute;
+      top: 50px;
+      left: 265px;
+      cursor: pointer;
+
+      .toggle-sidebar-icon {
+        border-radius: 50%;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        background: var(--color-acciones-1);
+        padding: 10px;
+        transition: 0.2s;
+
+        &:hover {
+          background: var(--color-acciones-1-oscuro);
+        }
+
+        .hamburger a {
+          color: var(--color-blanco);
+          transition: 0.2s;
+        }
+      }
+    }
+  }
+
+  .open-sidebar {
+    margin-left: 0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .close-sidebar {
+    margin-left: -250px;
+
+    .toggle-sidebar {
+      left: 15px;
+    }
+  }
+}
+
+ul.ul-secundario {
+  padding-left: 30px;
+  list-style-type: none;
+  li.li-secundario {
+    padding-left: 10px;
+    &:hover {
+      // background-color: lighten($color-de-fondo, 5%);
+    }
+  }
+}

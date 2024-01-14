@@ -6,11 +6,11 @@
   width: 100%;
   flex-direction: column;
   overflow: hidden;
-  background: linear-gradient(90deg, #1b0b2e, #371b58, #1b0b2e);
+  background: var(--color-primario-oscuro);
 
   @media screen and (max-width: 720px) {
     padding: 0 10%;
-    background: linear-gradient(90deg, #1b0b2e, #371b58);
+    background: var(--color-primario);
   }
 
   .auth-form {
@@ -20,7 +20,7 @@
     border-radius: 4px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     background: var(--color-primario);
-    color: white;
+    color: var(--color-fondo);
 
     @media screen and (min-width: 721px) {
       width: 500px;
@@ -36,7 +36,7 @@
 
       .form-field {
         .error {
-          color: rgb(207, 0, 0);
+          color: var(--color-gris-claro);
           font-size: 12px;
         }
       }
@@ -50,7 +50,7 @@
       margin-top: 10px;
 
       .fa-solid.fa-user {
-        fill: white;
+        fill: var(--color-blanco);
         font-size: 30px;
         text-align: center;
       }
@@ -78,7 +78,7 @@
       margin-top: 10px;
 
       span {
-        color: #dddddd;
+        color: var(--color-fondo);
         text-decoration: none;
 
         &:hover {
@@ -93,7 +93,7 @@
   .success-view {
     .c-registered {
       text-align: center;
-      color: white;
+      color: var(--color-fondo);
       display: flex;
       gap: 45px;
       flex-direction: column;
@@ -117,7 +117,7 @@
     flex-direction: column;
     gap: 60px;
     justify-content: center;
-    background: linear-gradient(90deg, #1b0b2e, #371b58, #1b0b2e);
+    background: var(--color-primario);
 
     img.img {
       width: 200px;
@@ -131,7 +131,7 @@
     }
 
     p {
-      color: white;
+      color: var(--color-fondo);
       font-size: 25px;
     }
   }
